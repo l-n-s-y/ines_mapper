@@ -5,11 +5,11 @@ import pygame
 
 # TODO: Implement system palette
 
-tile_scale = 4
+tile_scale = 2
 
 
-#palette = [(255,0,0),(0,255,0),(0,0,255),(255,255,0)] # eyebleed
-palette = [(184,184,248),(248,56,0),(252,160,4),(172,124,0)] # mario
+palette = [(255,0,0),(0,255,0),(0,0,255),(255,255,0)] # eyebleed
+#palette = [(184,184,248),(248,56,0),(252,160,4),(172,124,0)] # mario
 def palette_lookup(p):
     return palette[p]
 
@@ -20,7 +20,7 @@ def render_tiles(tiles): # tiles -> 8x8x8192 array
 
     vertical_index = 0
     while True:
-        #pygame.time.Clock().tick(999)
+        pygame.time.Clock().tick(20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 exit()
@@ -30,11 +30,11 @@ def render_tiles(tiles): # tiles -> 8x8x8192 array
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_DOWN]:
-            vertical_index = min(vertical_index+32,len(tiles)-1)
+            vertical_index = min(vertical_index+size[0]//tile_scale//8,len(tiles)-1)
             #print("GOING DOWN")
 
         if keys[pygame.K_UP]:
-            vertical_index = max(vertical_index-32,0)
+            vertical_index = max(vertical_index-size[0]//tile_scale//8,0)
             #print("GOING UP")
 
         x,y = 0,0

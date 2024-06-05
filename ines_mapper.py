@@ -89,7 +89,7 @@ class rom_mapper:
         print("\tMapping FLAGS6 section: ")
         # Arrangement: True -> Vertically Mirrored ; False -> Horizontally Mirrored
         self.nametable_arrangement = "vertical" if (f&0b1) == 1 else "horizontal"
-        print(f"\t\tNametable Arr: {self.nametable_arrangement}")
+        print(f"\t\tNametable Arrangement: {self.nametable_arrangement}")
 
         self.has_battery_RAM = (f&0b10) == 1
         print(f"\t\tHas Battery RAM: {self.has_battery_RAM}")
@@ -123,12 +123,13 @@ class rom_mapper:
 
     def map_flags8(self,f):
         print("\tMapping FLAGS8 section: ")
+        self.prg_ram_size = f
         self.prg_ram_compat = f == 0
         if self.prg_ram_compat:
             # Uses 8kb of PRG RAM for compatability
-            print(f"\t\tPRG RAM COMPATABILITY")
-        self.prg_ram_size = f
-        print(f"\t\tPRG RAM Size: {self.prg_ram_size}")
+            print(f"\t\tHas PRG RAM Compatability")
+        else:
+            print(f"\t\tPRG RAM Size: {self.prg_ram_size}")
 
 
     def map_flags9(self,f):
