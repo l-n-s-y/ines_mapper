@@ -16,6 +16,8 @@ iNES file format spec found @ https://www.nesdev.org/wiki/INES
 
 import sys,os
 
+from chr_parser import chr_parser
+
 
 # iNES section sizes
 HEADER_SIZE = 16
@@ -24,12 +26,12 @@ EIGHT_KB = 8192
 
 
 
-class rom:
+class rom_mapper:
     def __init__(self):
         self.header_mapped = False
         self.read_offset = 0
 
-    def load_rom_data(self,data):
+    def load_rom(self,data):
         self.rom_data = data
 
     def signature_is_valid(self,sig:bytes) -> bool:
@@ -181,8 +183,8 @@ def main(rom_file):
         rom_data = f.read()
 
     print(f"Parsing ROM: {rom_file}")
-    new_rom = rom()
-    new_rom.load_rom_data(rom_data)
+    new_rom = rom_mapper()
+    new_rom.load_rom(rom_data)
     #new_rom.map_header(rom_data[:HEADER_SIZE])
     new_rom.map_header()
 
@@ -194,6 +196,10 @@ def main(rom_file):
 
     if not new_rom.uses_chr_ram:
        new_rom.map_chr_rom()
+
+
+    chr_prsr = chr_parser()
+    chr_prsr.parse_tiles(new_rom.chr_rom)
 
 
 if __name__ == "__main__":
