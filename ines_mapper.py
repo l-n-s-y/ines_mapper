@@ -29,6 +29,8 @@ EIGHT_KB = 8192
 class rom_mapper:
     def __init__(self):
         self.header_mapped = False
+        self.prg_mapped = False
+        self.chr_mapped = False
         self.read_offset = 0
 
     def load_rom(self,data):
@@ -165,12 +167,16 @@ class rom_mapper:
 
         self.read_offset += index_offset
 
+        self.prg_mapped = True
+
 
     def map_chr_rom(self):
         index_offset = (self.chr_rom_size*EIGHT_KB)
         self.chr_rom = self.rom_data[self.read_offset:self.read_offset+index_offset]
 
         self.read_offset += index_offset
+
+        self.chr_mapped = True
 
 
     def map_prg_ram(self):
@@ -196,7 +202,9 @@ def main(rom_file):
 
     if not new_rom.uses_chr_ram:
        new_rom.map_chr_rom()
-
+    else:
+        print("ROM uses CHR RAM. (not currently supported)")
+        exit()
 
     chr_prsr = chr_parser()
     chr_prsr.parse_tiles(new_rom.chr_rom)
