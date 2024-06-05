@@ -91,16 +91,16 @@ class rom_mapper:
         self.nametable_arrangement = "vertical" if (f&0b1) == 1 else "horizontal"
         print(f"\t\tNametable Arrangement: {self.nametable_arrangement}")
 
-        self.has_battery_RAM = (f&0b10) == 1
+        self.has_battery_RAM = (f&0b10)>>1 == 1
         print(f"\t\tHas Battery RAM: {self.has_battery_RAM}")
 
-        self.has_trainer = (f&0b100) == 1
+        self.has_trainer = (f&0b100)>>2 == 1
         print(f"\t\tHas Trainer: {self.has_trainer}")
 
-        self.alt_nametable_layout = (f&0b1000) == 1
+        self.alt_nametable_layout = (f&0b1000)>>3 == 1
         print(f"\t\tAlt Nametable Layout: {self.alt_nametable_layout}")
 
-        self.mapper_num_lo = (f&0b11110000)
+        self.mapper_num_lo = (f&0b11110000)>>4
         print(f"\t\tMapper number lowbyte: {self.mapper_num_lo}")
 
 
@@ -110,13 +110,13 @@ class rom_mapper:
         self.vs_unisystem = (f&0b1) == 1
         print(f"\t\tVS Unisystem: {self.vs_unisystem}")
         
-        self.playchoice10 = (f&0b10) == 1
+        self.playchoice10 = (f&0b10)>>1 == 1
         print(f"\t\tPlaychoice10: {self.playchoice10}")
 
-        self.using_nes2 = (f&0b1100) == 2
+        self.using_nes2 = (f&0b1100)>>2 == 2
         print(f"\t\tUsing NES 2.0 format: {self.using_nes2}")
 
-        self.mapper_num_hi = (f&0b11110000)
+        self.mapper_num_hi = (f&0b11110000)>>4
         print(f"\t\tMapper number highbyte: {self.mapper_num_hi}")
 
 
