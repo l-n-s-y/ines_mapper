@@ -1,5 +1,5 @@
 """
-====[ l-n-s-y's iNES ROM file mapper ]====
+====[ l-n-s-y's iNES ROM file mapper v0.1]====
 
 started: 05/06/2024
 
@@ -21,9 +21,10 @@ from chr_parser import chr_parser
 
 # iNES section sizes
 HEADER_SIZE = 16
+
+# constants
 SIXTEEN_KB = 16384
 EIGHT_KB = 8192
-
 
 
 class rom_mapper:
@@ -39,13 +40,13 @@ class rom_mapper:
     def signature_is_valid(self,sig:bytes) -> bool:
         return sig == b"\x4E\x45\x53\x1A" # "NES\x1a"
 
-    def map_header(self) -> bool: #,section:bytes) -> bool:
+    def map_header(self) -> bool: 
         section = self.rom_data[:HEADER_SIZE]
         signature = section[:4]
         if not self.signature_is_valid(signature):
             print("ERROR: Invalid Signature")
             return False
-        print(f"\tROM Signature: {signature}")
+        print(f"\tROM Signature: {str(signature)}")
 
         self.prg_rom_size = section[4]
         print(f"\tPRG_ROM SIZE: {self.prg_rom_size*SIXTEEN_KB}")
@@ -212,7 +213,6 @@ def main(rom_file):
 
 
 if __name__ == "__main__":
-
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} [nes_rom]")
         exit()
