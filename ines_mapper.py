@@ -186,7 +186,7 @@ class rom_mapper:
         pass
 
 
-def main(rom_file):
+def main(rom_file:str,write_bytes_out:bool):
     with open(rom_file,"rb") as f:
         rom_data = f.read()
 
@@ -208,13 +208,22 @@ def main(rom_file):
         print("ROM uses CHR RAM. (not currently supported)")
         exit()
 
+    if write_bytes_out:
+        print("Dumping PRG and CHR...")
+        with open(f"{rom_file}.prg","wb") as f:
+            f.write(new_rom.prg_rom)
+            print(f"\t- {rom_file}.prg")
+        with open(f"{rom_file}.chr","wb") as f:
+            f.write(new_rom.chr_rom)
+            print(f"\t- {rom_file}.chr")
+
     chr_prsr = chr_parser()
     chr_prsr.parse_tiles(new_rom.chr_rom)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} [nes_rom]")
+    if len(sys.argv) != 2 and len(sys.argv) != 3:
+        print(f"Usage: {sys.argv[0]} [nes_rom] {-w}")
         exit()
 
     if not os.path.exists(sys.argv[1]):
@@ -223,4 +232,4 @@ if __name__ == "__main__":
 
     rom_file = sys.argv[1]
 
-    main(rom_file)
+    main(rom_file,sys.argv[2]=="-w")
