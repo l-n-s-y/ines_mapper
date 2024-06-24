@@ -6,6 +6,7 @@ import pygame
 # TODO: Implement system palette
 
 tile_scale = 8
+max_tile_scale = 32
 
 
 mario = [(184,184,248),(248,56,0),(252,160,4),(172,124,0)] # mario
@@ -18,6 +19,8 @@ def palette_lookup(p):
 
 def render_tiles(tiles): # tiles -> 8x8x8192 array
     global palette_index
+    global tile_scale
+    global max_tile_scale
 
     pygame.display.init()
     size = (1024,1024)
@@ -36,10 +39,13 @@ def render_tiles(tiles): # tiles -> 8x8x8192 array
                 if event.key == pygame.K_2:
                     palette_index = 1
 
+            if event.type == pygame.MOUSEWHEEL:
+                tile_scale += event.y
+                tile_scale = min(max(tile_scale,0),max_tile_scale)
+
         screen.fill((0,0,0))
 
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_DOWN]:
             vertical_index = min(vertical_index+(size[0]//tile_scale)//8,len(tiles))
             #print("GOING DOWN")
