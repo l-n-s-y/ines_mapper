@@ -186,11 +186,7 @@ class rom_mapper:
         pass
 
 
-<<<<<<< HEAD
 def main(rom_file:str,write_bytes_out=False):
-=======
-def main(rom_file:str,write_bytes_out:bool):
->>>>>>> 621cdff21c43490922b204f062ed1ac5dbaccfc5
     with open(rom_file,"rb") as f:
         rom_data = f.read()
 
@@ -236,11 +232,7 @@ if __name__ == "__main__":
 
     rom_file = sys.argv[1]
 
-<<<<<<< HEAD
     if len(sys.argv) == 3:
         main(rom_file,sys.argv[2]=="-w")
     else:
         main(rom_file)
-=======
-    main(rom_file,sys.argv[2]=="-w")
->>>>>>> 621cdff21c43490922b204f062ed1ac5dbaccfc5
