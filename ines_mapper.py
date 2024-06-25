@@ -16,7 +16,8 @@ iNES file format spec found @ https://www.nesdev.org/wiki/INES
 
 import sys,os
 
-from chr_parser import chr_parser
+if __name__ == "__main__":
+    from chr_parser import chr_parser
 
 
 # iNES section sizes
